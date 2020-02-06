@@ -1,81 +1,38 @@
-import 'dart:convert';
 import 'dart:io';
 
+import 'ftpsocket.dart';
 import 'ftpexceptions.dart';
 
 class FTPClient {
-  final Encoding _codec = new Utf8Codec();
-
-  final String _host;
-  final int _port;
   final String _user;
   final String _pass;
+  FTPSocket _socket;
 
-  RawSynchronousSocket _socket;
-
-  FTPClient(this._host, [this._port = 21, this._user = 'anonymous', this._pass = '']);
-
-  String _readResponse() {
-    int iToRead = 0;
-    StringBuffer buffer = new StringBuffer();
-
-    do {
-      if (iToRead > 0) {
-        buffer.write(_codec.decode(_socket.readSync(iToRead)));
-      }
-
-      iToRead = _socket.available();
-
-      sleep(new Duration(milliseconds: 100));
-    } while (iToRead > 0 || buffer.length == 0);
-
-    return buffer.toString().trimRight();
+  /// Create a FTP Client instance
+  /// 
+  /// [host]: Hostname or IP Address
+  /// [port]: Port number (Defaults to 21)
+  /// [_user]: Username (Defaults to anonymous)
+  /// [_pass]: Password if not anonymous login
+  FTPClient(String host, [int port = 21, this._user = 'anonymous', this._pass = '']) {
+    _socket = new FTPSocket(host, port);
   }
 
-  void _sendCommand(String sCommand) {
-    _socket.writeFromSync(_codec.encode('$sCommand\r\n'));
-  }
-
+  /// Connect to the FTP Server
   void connect() {
-    _socket = RawSynchronousSocket.connectSync(_host, _port);
-
-    // Wait for Connect
-    String sResponse = _readResponse();
-    if (!sResponse.startsWith('220 ')) {
-      throw new FTPException('Unknown response from FTP server', sResponse);
-    }
-
-    // Send Username
-    _sendCommand('USER $_user');
-
-    sResponse = _readResponse();
-    if (!sResponse.startsWith('331 ')) {
-      throw new FTPException('Wrong username $_user', sResponse);
-    }
-
-    // Send Password
-    _sendCommand('PASS $_pass');
-
-    sResponse = _readResponse();
-    if (!sResponse.startsWith('230 ')) {
-      throw new FTPException('Wrong password', sResponse);
-    }
+    _socket.connect(_user, _pass);
   }
 
+  // Disconnect from the FTP Server
   void disconnect() {
-    try {
-      _sendCommand('QUIT');
-    } catch (ignored) {
-      // Ignore
-    } finally {
-      _socket.closeSync();
-    }
+    _socket.disconnect();
   }
 
+  /// Upload the File [fFile] to the current directory
   void uploadFile(File fFile) {
-    _sendCommand('PASV');
+    _socket.sendCommand('PASV');
 
-    String sResponse = _readResponse();
+    String sResponse = _socket.readResponse();
     if (!sResponse.startsWith('227 ')) {
       throw new FTPException('Could not start Passive Mode', sResponse);
     }
