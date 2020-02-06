@@ -7,6 +7,7 @@ import 'package:ftpclient/src/debug/printlog.dart';
 
 import 'commands/directory.dart';
 import 'ftpsocket.dart';
+import 'transfermode.dart';
 
 class FTPClient {
   String _user;
@@ -45,8 +46,8 @@ class FTPClient {
   }
 
   /// Upload the File [fFile] to the current directory
-  void uploadFile(File fFile) {
-    FileUpload(_socket, _log).uploadFile(fFile);
+  void uploadFile(File fFile, {String sRemoteName = '', TransferMode mode = TransferMode.binary}) {
+    FileUpload(_socket, mode, _log).uploadFile(fFile, sRemoteName);
   }
 
   /// Create a new Directory with the Name of [sDirectory] in the current directory

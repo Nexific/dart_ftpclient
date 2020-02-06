@@ -5,18 +5,36 @@ import 'package:path/path.dart';
 
 import '../ftpexceptions.dart';
 import '../ftpsocket.dart';
+import '../transfermode.dart';
 
 class FileUpload {
   static const int _BUFFER_SIZE = 1024 * 1024;
   final FTPSocket _socket;
+  final TransferMode _mode;
   final DebugLog _log;
 
   /// File Upload Command
-  FileUpload(this._socket, this._log);
+  FileUpload(this._socket, this._mode, this._log);
 
-  /// Upload File [fFile] to the current directory
-  void uploadFile(File fFile) {
+  /// Upload File [fFile] to the current directory with [sRemoteName] (using filename if not set)
+  void uploadFile(File fFile, [String sRemoteName = '']) {
     _log.log('Upload File: ${fFile.path}');
+
+    // Transfer Mode
+    switch(_mode) {
+      case TransferMode.ascii:
+        // Set to ASCII mode
+        _socket.sendCommand('TYPE A');
+        _socket.readResponse();
+        break;
+      case TransferMode.binary:
+        // Set to BINARY mode
+        _socket.sendCommand('TYPE I');
+        _socket.readResponse();
+        break;
+      default:
+        break;
+    }
 
     // Enter passive mode
     _socket.sendCommand('PASV');
@@ -29,7 +47,11 @@ class FileUpload {
     int iPort = _parsePort(sResponse);
 
     // Store File
-    _socket.sendCommand('STOR ' + basename(fFile.path));
+    String sFilename = sRemoteName;
+    if (sFilename == null || sFilename.isEmpty) {
+      sFilename = basename(fFile.path);
+    }
+    _socket.sendCommand('STOR $sFilename');
 
     // Data Transfer Socket
     _log.log('Opening DataSocket to Port $iPort');

@@ -1,6 +1,8 @@
 ## 0.2.0
 
-- 
+- Change Transfer mode (default is binary)
+- Set Remote file name
+- Small performance optimization
 
 ## 0.1.0
 

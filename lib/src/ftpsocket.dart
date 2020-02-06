@@ -30,7 +30,9 @@ class FTPSocket {
 
       iToRead = _socket.available();
 
-      sleep(Duration(milliseconds: 100));
+      if (iToRead == 0 && buffer.length == 0) {
+        sleep(Duration(milliseconds: 100));
+      }
     } while (iToRead > 0 || (buffer.length == 0 && !bOptional));
 
     String sResponse = buffer.toString().trimRight();
@@ -41,6 +43,9 @@ class FTPSocket {
   /// Send a command to the FTP Server
   void sendCommand(String sCommand) {
     _log.log('> $sCommand');
+    if (_socket.available() > 0) {
+      readResponse();
+    }
     _socket.writeFromSync(_codec.encode('$sCommand\r\n'));
   }
 
@@ -72,10 +77,6 @@ class FTPSocket {
     }
 
     _log.log('Connected!');
-
-    // Set to BINARY mode
-    sendCommand('TYPE I');
-    readResponse();
   }
 
   // Disconnect from the FTP Server
