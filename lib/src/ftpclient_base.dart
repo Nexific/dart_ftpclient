@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ftpclient/src/commands/filedownload.dart';
 import 'package:ftpclient/src/commands/fileupload.dart';
 import 'package:ftpclient/src/debug/debuglog.dart';
 import 'package:ftpclient/src/debug/nooplog.dart';
@@ -48,6 +49,11 @@ class FTPClient {
   /// Upload the File [fFile] to the current directory
   void uploadFile(File fFile, {String sRemoteName = '', TransferMode mode = TransferMode.binary}) {
     FileUpload(_socket, mode, _log).uploadFile(fFile, sRemoteName);
+  }
+
+  /// Download the Remote File [sRemoteName] to the local File [fFile]
+  void downloadFile(String sRemoteName, File fFile, {TransferMode mode = TransferMode.binary}) {
+    FileDownload(_socket, mode, _log).downloadFile(sRemoteName, fFile);
   }
 
   /// Create a new Directory with the Name of [sDirectory] in the current directory

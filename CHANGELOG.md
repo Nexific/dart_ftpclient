@@ -3,6 +3,7 @@
 - Change Transfer mode (default is binary)
 - Set Remote file name
 - Small performance optimization
+- Download Files
 
 ## 0.1.0
 

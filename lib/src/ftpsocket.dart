@@ -42,10 +42,11 @@ class FTPSocket {
 
   /// Send a command to the FTP Server
   void sendCommand(String sCommand) {
-    _log.log('> $sCommand');
     if (_socket.available() > 0) {
       readResponse();
     }
+
+    _log.log('> $sCommand');
     _socket.writeFromSync(_codec.encode('$sCommand\r\n'));
   }
 
