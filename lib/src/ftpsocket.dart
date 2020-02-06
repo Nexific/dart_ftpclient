@@ -19,7 +19,7 @@ class FTPSocket {
   /// Read the FTP Server response from the Stream
   /// 
   /// Blocks until data is received!
-  String readResponse() {
+  String readResponse([bool bOptional = false]) {
     int iToRead = 0;
     StringBuffer buffer = new StringBuffer();
 
@@ -31,7 +31,7 @@ class FTPSocket {
       iToRead = _socket.available();
 
       sleep(new Duration(milliseconds: 100));
-    } while (iToRead > 0 || buffer.length == 0);
+    } while (iToRead > 0 || (buffer.length == 0 && !bOptional));
 
     String sResponse = buffer.toString().trimRight();
     _log.log('< $sResponse');
@@ -72,6 +72,10 @@ class FTPSocket {
     }
 
     _log.log('Connected!');
+
+    // Set to BINARY mode
+    sendCommand('TYPE I');
+    readResponse();
   }
 
   // Disconnect from the FTP Server

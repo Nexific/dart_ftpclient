@@ -59,6 +59,8 @@ class FileUpload {
     dataSocket.closeSync();
     fRAFile.closeSync();
 
+    _socket.readResponse();
+
     _log.log('File Uploaded!');
   }
 

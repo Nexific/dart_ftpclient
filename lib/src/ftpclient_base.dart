@@ -5,6 +5,7 @@ import 'package:ftpclient/src/debug/debuglog.dart';
 import 'package:ftpclient/src/debug/nooplog.dart';
 import 'package:ftpclient/src/debug/printlog.dart';
 
+import 'commands/directory.dart';
 import 'ftpsocket.dart';
 
 class FTPClient {
@@ -46,5 +47,32 @@ class FTPClient {
   /// Upload the File [fFile] to the current directory
   void uploadFile(File fFile) {
     new FileUpload(_socket, _log).uploadFile(fFile);
+  }
+
+  /// Create a new Directory with the Name of [sDirectory] in the current directory
+  /// Returns `true` if the directory was created successfully
+  /// Returns `false` if the directory could not be created or already exists
+  bool makeDirectory(String sDirectory) {
+    return new FTPDirectory(_socket).makeDirectory(sDirectory);
+  }
+
+  /// Deletes the Directory with the Name of [sDirectory] in the current directory
+  /// Returns `true` if the directory was deleted successfully
+  /// Returns `false` if the directory could not be deleted or does not nexist
+  bool deleteDirectory(String sDirectory) {
+    return new FTPDirectory(_socket).deleteDirectory(sDirectory);
+  }
+
+  /// Change into the Directory with the Name of [sDirectory] within the current directory
+  /// Use `..` to navigate back
+  /// Returns `true` if the directory was changed successfully
+  /// Returns `false` if the directory could not be changed (does not exist, no permissions or another error)
+  bool changeDirectory(String sDirectory) {
+    return new FTPDirectory(_socket).changeDirectory(sDirectory);
+  }
+
+  /// Returns the current directory
+  String currentDirectory() {
+    return new FTPDirectory(_socket).currentDirectory();
   }
 }
