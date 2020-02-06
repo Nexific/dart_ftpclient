@@ -6,12 +6,12 @@ import '../ftpclient.dart';
 class FTPSocket {
   final Encoding _codec = new Utf8Codec();
 
-  final String _host;
-  final int _port;
+  final String host;
+  final int port;
 
   RawSynchronousSocket _socket;
 
-  FTPSocket(this._host, this._port);
+  FTPSocket(this.host, this.port);
 
   /// Read the FTP Server response from the Stream
   /// 
@@ -40,7 +40,7 @@ class FTPSocket {
 
   /// Connect to the FTP Server and Login with [user] and [pass]
   void connect(String user, String pass) {
-    _socket = RawSynchronousSocket.connectSync(_host, _port);
+    _socket = RawSynchronousSocket.connectSync(host, port);
 
     // Wait for Connect
     String sResponse = readResponse();

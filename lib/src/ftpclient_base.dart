@@ -31,6 +31,6 @@ class FTPClient {
 
   /// Upload the File [fFile] to the current directory
   void uploadFile(File fFile) {
-    new FileUpload(_socket).upload(fFile);
+    new FileUpload(_socket).uploadFile(fFile);
   }
 }

@@ -1,16 +1,20 @@
 import 'dart:io';
 
+import 'package:path/path.dart';
+
 import '../ftpexceptions.dart';
 import '../ftpsocket.dart';
 
 class FileUpload {
+  static const int BUFFER_SIZE = 1024 * 1024;
   final FTPSocket _socket;
 
   /// File Upload Command
   FileUpload(this._socket);
 
   /// Upload File [fFile] to the current directory
-  void upload(File fFile) {
+  void uploadFile(File fFile) {
+    // Enter passive mode
     _socket.sendCommand('PASV');
 
     String sResponse = _socket.readResponse();
@@ -19,6 +23,33 @@ class FileUpload {
     }
 
     int iPort = _parsePort(sResponse);
+
+    // Store File
+    _socket.sendCommand('STOR ' + basename(fFile.path));
+
+    // Data Transfer Socket
+    RawSynchronousSocket dataSocket = RawSynchronousSocket.connectSync(_socket.host, iPort);
+
+    // Transfer file
+    RandomAccessFile fRAFile = fFile.openSync(mode: FileMode.read);
+    int iRead = 0;
+    final int iSize = fRAFile.lengthSync();
+
+    while (iRead < iSize) {
+      int iEnd = BUFFER_SIZE;
+      if (iRead + iEnd > iSize) {
+        iEnd = iSize - iRead;
+      }
+
+      List<int> buffer = new List<int>(iEnd);
+      fRAFile.readIntoSync(buffer);
+      dataSocket.writeFromSync(buffer);
+
+      iRead += iEnd;
+    }
+
+    dataSocket.closeSync();
+    fRAFile.closeSync();
   }
 
   /// Parse the Passive Mode Port from the Servers [sResponse]
