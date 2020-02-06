@@ -1,5 +1,7 @@
 import 'dart:io';
 
+import 'package:ftpclient/src/commands/fileupload.dart';
+
 import 'ftpsocket.dart';
 import 'ftpexceptions.dart';
 
@@ -30,26 +32,6 @@ class FTPClient {
 
   /// Upload the File [fFile] to the current directory
   void uploadFile(File fFile) {
-    _socket.sendCommand('PASV');
-
-    String sResponse = _socket.readResponse();
-    if (!sResponse.startsWith('227 ')) {
-      throw new FTPException('Could not start Passive Mode', sResponse);
-    }
-
-    int iPort = _parsePort(sResponse);
-  }
-
-  int _parsePort(String sResponse) {
-    int iParOpen = sResponse.indexOf('(');
-    int iParClose = sResponse.indexOf(')');
-
-    String sParameters = sResponse.substring(iParOpen + 1, iParClose);
-    List<String> lstParameters = sParameters.split(',');
-
-    int iPort1 = int.parse(lstParameters[lstParameters.length - 2]);
-    int iPort2 = int.parse(lstParameters[lstParameters.length - 1]);
-
-    return (iPort1 * 256) + iPort2;
+    new FileUpload(_socket).upload(fFile);
   }
 }
