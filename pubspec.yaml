@@ -1,0 +1,13 @@
+name: ftpclient
+description: A simple dart FTP Client
+version: 0.1.0
+homepage: https://nexific.com
+
+environment:
+  sdk: '>=2.7.0 <3.0.0'
+
+dependencies:
+
+dev_dependencies:
+  pedantic: ^1.8.0
+  test: ^1.6.0
