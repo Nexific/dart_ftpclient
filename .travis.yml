@@ -3,4 +3,4 @@ dart:
   - stable
 dart_task:
   - test
-  - dartanalyzer: --fatal-warnings
+  - dartanalyzer: --fatal-warnings lib/
