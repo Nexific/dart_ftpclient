@@ -23,7 +23,7 @@ class FileUpload {
 
     String sResponse = _socket.readResponse();
     if (!sResponse.startsWith('227 ')) {
-      throw new FTPException('Could not start Passive Mode', sResponse);
+      throw FTPException('Could not start Passive Mode', sResponse);
     }
 
     int iPort = _parsePort(sResponse);
@@ -47,7 +47,7 @@ class FileUpload {
         iEnd = iSize - iRead;
       }
 
-      List<int> buffer = new List<int>(iEnd);
+      List<int> buffer = List<int>(iEnd);
       fRAFile.readIntoSync(buffer);
       dataSocket.writeFromSync(buffer);
 

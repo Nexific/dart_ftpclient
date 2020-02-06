@@ -35,7 +35,7 @@ class FTPDirectory {
 
     String sResponse = _socket.readResponse();
     if (!sResponse.startsWith('257 ')) {
-      throw new FTPException('Failed to get current working directory', sResponse);
+      throw FTPException('Failed to get current working directory', sResponse);
     }
 
     int iStart = sResponse.indexOf('"') + 1;

@@ -38,6 +38,7 @@ linter:
     - unawaited_futures
     - unnecessary_null_in_if_null_operators
     - unnecessary_this
+    - unnecessary_new
     - unrelated_type_equality_checks
     - use_function_type_syntax_for_parameters
     - use_rethrow_when_possible

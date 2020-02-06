@@ -1,7 +1,7 @@
 name: ftpclient
-description: A simple dart FTP Client
+description: A simple dart FTP Client Library to interact with FTP Servers
 version: 0.2.0
-homepage: https://nexific.com
+homepage: https://github.com/Nexific/dart_ftpclient
 
 environment:
   sdk: '>=2.7.0 <3.0.0'

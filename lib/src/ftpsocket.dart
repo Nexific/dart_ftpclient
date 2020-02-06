@@ -6,7 +6,7 @@ import 'package:ftpclient/src/debug/debuglog.dart';
 import '../ftpclient.dart';
 
 class FTPSocket {
-  final Encoding _codec = new Utf8Codec();
+  final Encoding _codec = Utf8Codec();
 
   final String host;
   final int port;
@@ -21,7 +21,7 @@ class FTPSocket {
   /// Blocks until data is received!
   String readResponse([bool bOptional = false]) {
     int iToRead = 0;
-    StringBuffer buffer = new StringBuffer();
+    StringBuffer buffer = StringBuffer();
 
     do {
       if (iToRead > 0) {
@@ -30,7 +30,7 @@ class FTPSocket {
 
       iToRead = _socket.available();
 
-      sleep(new Duration(milliseconds: 100));
+      sleep(Duration(milliseconds: 100));
     } while (iToRead > 0 || (buffer.length == 0 && !bOptional));
 
     String sResponse = buffer.toString().trimRight();
@@ -52,7 +52,7 @@ class FTPSocket {
     // Wait for Connect
     String sResponse = readResponse();
     if (!sResponse.startsWith('220 ')) {
-      throw new FTPException('Unknown response from FTP server', sResponse);
+      throw FTPException('Unknown response from FTP server', sResponse);
     }
 
     // Send Username
@@ -60,7 +60,7 @@ class FTPSocket {
 
     sResponse = readResponse();
     if (!sResponse.startsWith('331 ')) {
-      throw new FTPException('Wrong username $user', sResponse);
+      throw FTPException('Wrong username $user', sResponse);
     }
 
     // Send Password
@@ -68,7 +68,7 @@ class FTPSocket {
 
     sResponse = readResponse();
     if (!sResponse.startsWith('230 ')) {
-      throw new FTPException('Wrong password', sResponse);
+      throw FTPException('Wrong password', sResponse);
     }
 
     _log.log('Connected!');

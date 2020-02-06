@@ -26,12 +26,12 @@ class FTPClient {
     _pass = pass;
 
     if (debug) {
-      _log = new PrintLog();
+      _log = PrintLog();
     } else {
-      _log = new NoOpLogger();
+      _log = NoOpLogger();
     }
 
-    _socket = new FTPSocket(host, port, _log);
+    _socket = FTPSocket(host, port, _log);
   }
 
   /// Connect to the FTP Server
@@ -46,21 +46,21 @@ class FTPClient {
 
   /// Upload the File [fFile] to the current directory
   void uploadFile(File fFile) {
-    new FileUpload(_socket, _log).uploadFile(fFile);
+    FileUpload(_socket, _log).uploadFile(fFile);
   }
 
   /// Create a new Directory with the Name of [sDirectory] in the current directory
   /// Returns `true` if the directory was created successfully
   /// Returns `false` if the directory could not be created or already exists
   bool makeDirectory(String sDirectory) {
-    return new FTPDirectory(_socket).makeDirectory(sDirectory);
+    return FTPDirectory(_socket).makeDirectory(sDirectory);
   }
 
   /// Deletes the Directory with the Name of [sDirectory] in the current directory
   /// Returns `true` if the directory was deleted successfully
   /// Returns `false` if the directory could not be deleted or does not nexist
   bool deleteDirectory(String sDirectory) {
-    return new FTPDirectory(_socket).deleteDirectory(sDirectory);
+    return FTPDirectory(_socket).deleteDirectory(sDirectory);
   }
 
   /// Change into the Directory with the Name of [sDirectory] within the current directory
@@ -68,11 +68,11 @@ class FTPClient {
   /// Returns `true` if the directory was changed successfully
   /// Returns `false` if the directory could not be changed (does not exist, no permissions or another error)
   bool changeDirectory(String sDirectory) {
-    return new FTPDirectory(_socket).changeDirectory(sDirectory);
+    return FTPDirectory(_socket).changeDirectory(sDirectory);
   }
 
   /// Returns the current directory
   String currentDirectory() {
-    return new FTPDirectory(_socket).currentDirectory();
+    return FTPDirectory(_socket).currentDirectory();
   }
 }
