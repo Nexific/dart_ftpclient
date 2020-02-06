@@ -4,12 +4,25 @@ A small and simple FTP Client library for Dart Native.
 
 ## Usage
 
-A simple usage example:
+Add the following dependency to the pubspec.yaml
+
+```yaml
+dependencies:
+  ftpclient: ^0.1.0
+```
+
+How to use the FTP Client:
 
 ```dart
+import 'dart:io';
 import 'package:ftpclient/ftpclient.dart';
 
 main() {
-  // TODO
+  FTPClient ftpClient = new FTPClient('example.com', user: 'myname', pass: 'mypass');
+  ftpClient.connect();
+  ftpClient.uploadFile(new File('test.zip'));
+  ftpClient.disconnect();
 }
 ```
+
+For a complete example, see the examples in the example folder!
