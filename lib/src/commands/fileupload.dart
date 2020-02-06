@@ -43,7 +43,8 @@ class FileUpload {
 
     // Data Transfer Socket
     _log.log('Opening DataSocket to Port $iPort');
-    RawSynchronousSocket dataSocket = RawSynchronousSocket.connectSync(_socket.host, iPort);
+    RawSynchronousSocket dataSocket =
+        RawSynchronousSocket.connectSync(_socket.host, iPort);
 
     // Transfer file
     RandomAccessFile fRAFile = fFile.openSync(mode: FileMode.read);

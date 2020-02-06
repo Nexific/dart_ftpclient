@@ -17,7 +17,7 @@ class FTPSocket {
   FTPSocket(this.host, this.port, this._log);
 
   /// Read the FTP Server response from the Stream
-  /// 
+  ///
   /// Blocks until data is received!
   String readResponse([bool bOptional = false]) {
     int iToRead = 0;

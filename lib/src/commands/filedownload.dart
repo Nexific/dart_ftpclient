@@ -41,7 +41,8 @@ class FileDownload {
 
     // Data Transfer Socket
     _log.log('Opening DataSocket to Port $iPort');
-    RawSynchronousSocket dataSocket = RawSynchronousSocket.connectSync(_socket.host, iPort);
+    RawSynchronousSocket dataSocket =
+        RawSynchronousSocket.connectSync(_socket.host, iPort);
 
     int iToRead = 0;
     int iRead = 0;
@@ -60,7 +61,7 @@ class FileDownload {
         sleep(Duration(milliseconds: 500));
         iToRead = dataSocket.available();
       }
-    } while(iToRead > 0 || iRead == 0);
+    } while (iToRead > 0 || iRead == 0);
 
     _log.log('Downloaded: $iRead B');
 

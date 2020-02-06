@@ -4,7 +4,7 @@ import '../transfermode.dart';
 class TransferUtil {
   /// Set the Transfer mode on [socket] to [mode]
   static void setTransferMode(FTPSocket socket, TransferMode mode) {
-    switch(mode) {
+    switch (mode) {
       case TransferMode.ascii:
         // Set to ASCII mode
         socket.sendCommand('TYPE A');

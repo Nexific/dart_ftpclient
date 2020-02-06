@@ -18,7 +18,7 @@ class FTPDirectory {
     _socket.sendCommand('RMD $sName');
 
     String sResponse = _socket.readResponse();
-    
+
     return sResponse.startsWith('250 ');
   }
 

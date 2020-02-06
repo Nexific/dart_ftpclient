@@ -17,13 +17,17 @@ class FTPClient {
   DebugLog _log;
 
   /// Create a FTP Client instance
-  /// 
+  ///
   /// [host]: Hostname or IP Address
   /// [port]: Port number (Defaults to 21)
   /// [user]: Username (Defaults to anonymous)
   /// [pass]: Password if not anonymous login
   /// [debug]: Enable Debug Logging
-  FTPClient(String host, {int port = 21, String user = 'anonymous', String pass = '', bool debug = false}) {
+  FTPClient(String host,
+      {int port = 21,
+      String user = 'anonymous',
+      String pass = '',
+      bool debug = false}) {
     _user = user;
     _pass = pass;
 
@@ -47,12 +51,14 @@ class FTPClient {
   }
 
   /// Upload the File [fFile] to the current directory
-  void uploadFile(File fFile, {String sRemoteName = '', TransferMode mode = TransferMode.binary}) {
+  void uploadFile(File fFile,
+      {String sRemoteName = '', TransferMode mode = TransferMode.binary}) {
     FileUpload(_socket, mode, _log).uploadFile(fFile, sRemoteName);
   }
 
   /// Download the Remote File [sRemoteName] to the local File [fFile]
-  void downloadFile(String sRemoteName, File fFile, {TransferMode mode = TransferMode.binary}) {
+  void downloadFile(String sRemoteName, File fFile,
+      {TransferMode mode = TransferMode.binary}) {
     FileDownload(_socket, mode, _log).downloadFile(sRemoteName, fFile);
   }
 

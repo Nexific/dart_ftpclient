@@ -1,4 +1,1 @@
-enum TransferMode {
-  ascii,
-  binary
-}
+enum TransferMode { ascii, binary }
