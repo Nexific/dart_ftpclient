@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:ftpclient/src/commands/fileupload.dart';
 
 import 'ftpsocket.dart';
-import 'ftpexceptions.dart';
 
 class FTPClient {
   final String _user;

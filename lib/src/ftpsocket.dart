@@ -53,7 +53,7 @@ class FTPSocket {
 
     sResponse = readResponse();
     if (!sResponse.startsWith('331 ')) {
-      throw new FTPException('Wrong username $_user', sResponse);
+      throw new FTPException('Wrong username $user', sResponse);
     }
 
     // Send Password
