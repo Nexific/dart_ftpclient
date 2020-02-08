@@ -11,10 +11,11 @@ class FTPSocket {
   final String host;
   final int port;
   final DebugLog _log;
+  final int _timeout;
 
   RawSynchronousSocket _socket;
 
-  FTPSocket(this.host, this.port, this._log);
+  FTPSocket(this.host, this.port, this._log, this._timeout);
 
   /// Read the FTP Server response from the Stream
   ///
@@ -22,6 +23,7 @@ class FTPSocket {
   String readResponse([bool bOptional = false]) {
     int iToRead = 0;
     StringBuffer buffer = StringBuffer();
+    int iStart = DateTime.now().millisecondsSinceEpoch;
 
     do {
       if (iToRead > 0) {
@@ -31,6 +33,10 @@ class FTPSocket {
       iToRead = _socket.available();
 
       if (iToRead == 0 && buffer.length == 0) {
+        int iCurrent = DateTime.now().millisecondsSinceEpoch;
+        if (iCurrent - iStart > _timeout * 1000) {
+          throw FTPException('Timeout reached for Receive', '');
+        }
         sleep(Duration(milliseconds: 100));
       }
     } while (iToRead > 0 || (buffer.length == 0 && !bOptional));

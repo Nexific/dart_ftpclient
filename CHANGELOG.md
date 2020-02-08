@@ -2,6 +2,8 @@
 
 - Rename files and folders
 - Delete files
+- Error correction for file download & upload
+- Timeout for response from server
 
 ## 0.2.0
 

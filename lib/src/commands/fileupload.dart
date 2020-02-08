@@ -73,5 +73,7 @@ class FileUpload {
     _socket.readResponse();
 
     _log.log('File Uploaded!');
+
+    _socket.readResponse(true);
   }
 }

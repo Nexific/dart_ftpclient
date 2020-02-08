@@ -24,11 +24,13 @@ class FTPClient {
   /// [user]: Username (Defaults to anonymous)
   /// [pass]: Password if not anonymous login
   /// [debug]: Enable Debug Logging
+  /// [timeout]: Timeout in secods to wait for responses
   FTPClient(String host,
       {int port = 21,
       String user = 'anonymous',
       String pass = '',
-      bool debug = false}) {
+      bool debug = false,
+      int timeout = 30}) {
     _user = user;
     _pass = pass;
 
@@ -38,7 +40,7 @@ class FTPClient {
       _log = NoOpLogger();
     }
 
-    _socket = FTPSocket(host, port, _log);
+    _socket = FTPSocket(host, port, _log, timeout);
   }
 
   /// Connect to the FTP Server
