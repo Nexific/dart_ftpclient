@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:ftpclient/src/commands/file.dart';
 import 'package:ftpclient/src/commands/filedownload.dart';
 import 'package:ftpclient/src/commands/fileupload.dart';
 import 'package:ftpclient/src/debug/debuglog.dart';
@@ -87,5 +88,10 @@ class FTPClient {
   /// Returns the current directory
   String currentDirectory() {
     return FTPDirectory(_socket).currentDirectory();
+  }
+
+  /// Rename a file (or directory) from [sOldName] to [sNewName]
+  bool rename(String sOldName, String sNewName) {
+    return FTPFile(_socket).rename(sOldName, sNewName);
   }
 }
