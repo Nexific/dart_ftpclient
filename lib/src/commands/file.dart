@@ -13,7 +13,7 @@ class FTPFile {
       return false;
     }
 
-    _socket.sendCommand('RNTP $sNewName');
+    _socket.sendCommand('RNTO $sNewName');
 
     sResponse = _socket.readResponse();
     if (!sResponse.startsWith('250 ')) {
