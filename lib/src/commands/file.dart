@@ -22,4 +22,11 @@ class FTPFile {
 
     return true;
   }
+
+  bool delete(String sFilename) {
+    _socket.sendCommand('DELE $sFilename');
+
+    String sResponse = _socket.readResponse();
+    return sResponse.startsWith('250 ');
+  }
 }

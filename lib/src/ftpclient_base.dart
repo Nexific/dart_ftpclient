@@ -63,21 +63,24 @@ class FTPClient {
     FileDownload(_socket, mode, _log).downloadFile(sRemoteName, fFile);
   }
 
-  /// Create a new Directory with the Name of [sDirectory] in the current directory
+  /// Create a new Directory with the Name of [sDirectory] in the current directory.
+  /// 
   /// Returns `true` if the directory was created successfully
   /// Returns `false` if the directory could not be created or already exists
   bool makeDirectory(String sDirectory) {
     return FTPDirectory(_socket).makeDirectory(sDirectory);
   }
 
-  /// Deletes the Directory with the Name of [sDirectory] in the current directory
+  /// Deletes the Directory with the Name of [sDirectory] in the current directory.
+  /// 
   /// Returns `true` if the directory was deleted successfully
   /// Returns `false` if the directory could not be deleted or does not nexist
   bool deleteDirectory(String sDirectory) {
     return FTPDirectory(_socket).deleteDirectory(sDirectory);
   }
 
-  /// Change into the Directory with the Name of [sDirectory] within the current directory
+  /// Change into the Directory with the Name of [sDirectory] within the current directory.
+  /// 
   /// Use `..` to navigate back
   /// Returns `true` if the directory was changed successfully
   /// Returns `false` if the directory could not be changed (does not exist, no permissions or another error)
@@ -93,5 +96,10 @@ class FTPClient {
   /// Rename a file (or directory) from [sOldName] to [sNewName]
   bool rename(String sOldName, String sNewName) {
     return FTPFile(_socket).rename(sOldName, sNewName);
+  }
+
+  /// Delete the file [sFilename] from the server
+  bool deleteFile(String sFilename) {
+    return FTPFile(_socket).delete(sFilename);
   }
 }

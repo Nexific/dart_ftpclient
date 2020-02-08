@@ -1,6 +1,7 @@
 ## 0.3.0
 
 - Rename files and folders
+- Delete files
 
 ## 0.2.0
 
