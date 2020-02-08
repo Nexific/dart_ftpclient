@@ -66,7 +66,7 @@ class FTPClient {
   }
 
   /// Create a new Directory with the Name of [sDirectory] in the current directory.
-  /// 
+  ///
   /// Returns `true` if the directory was created successfully
   /// Returns `false` if the directory could not be created or already exists
   bool makeDirectory(String sDirectory) {
@@ -74,7 +74,7 @@ class FTPClient {
   }
 
   /// Deletes the Directory with the Name of [sDirectory] in the current directory.
-  /// 
+  ///
   /// Returns `true` if the directory was deleted successfully
   /// Returns `false` if the directory could not be deleted or does not nexist
   bool deleteDirectory(String sDirectory) {
@@ -82,7 +82,7 @@ class FTPClient {
   }
 
   /// Change into the Directory with the Name of [sDirectory] within the current directory.
-  /// 
+  ///
   /// Use `..` to navigate back
   /// Returns `true` if the directory was changed successfully
   /// Returns `false` if the directory could not be changed (does not exist, no permissions or another error)
