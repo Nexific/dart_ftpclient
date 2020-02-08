@@ -72,5 +72,6 @@ class FileDownload {
     _socket.readResponse();
 
     _log.log('File Downloaded!');
+    _socket.readResponse(true);
   }
 }
