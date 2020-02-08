@@ -1,6 +1,6 @@
 ## 0.3.0
 
-- Rename files
+- Rename files and folders
 
 ## 0.2.0
 
