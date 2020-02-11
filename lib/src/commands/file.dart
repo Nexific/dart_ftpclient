@@ -9,14 +9,14 @@ class FTPFile {
     _socket.sendCommand('RNFR $sOldName');
 
     String sResponse = _socket.readResponse();
-    if (!sResponse.startsWith('350 ')) {
+    if (!sResponse.startsWith('350')) {
       return false;
     }
 
     _socket.sendCommand('RNTO $sNewName');
 
     sResponse = _socket.readResponse();
-    if (!sResponse.startsWith('250 ')) {
+    if (!sResponse.startsWith('250')) {
       return false;
     }
 
@@ -27,6 +27,6 @@ class FTPFile {
     _socket.sendCommand('DELE $sFilename');
 
     String sResponse = _socket.readResponse();
-    return sResponse.startsWith('250 ');
+    return sResponse.startsWith('250');
   }
 }

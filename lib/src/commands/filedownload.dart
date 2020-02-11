@@ -24,7 +24,7 @@ class FileDownload {
     _socket.sendCommand('PASV');
 
     String sResponse = _socket.readResponse();
-    if (!sResponse.startsWith('227 ')) {
+    if (!sResponse.startsWith('227')) {
       throw FTPException('Could not start Passive Mode', sResponse);
     }
 
@@ -32,7 +32,7 @@ class FileDownload {
 
     _socket.sendCommand('RETR $sRemoteName');
     sResponse = _socket.readResponse(true);
-    if (sResponse.startsWith('550 ')) {
+    if (sResponse.startsWith('550')) {
       throw FTPException('Remote File $sRemoteName does not exist!', sResponse);
     }
 

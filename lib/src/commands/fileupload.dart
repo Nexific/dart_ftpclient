@@ -28,7 +28,7 @@ class FileUpload {
     _socket.sendCommand('PASV');
 
     String sResponse = _socket.readResponse();
-    if (!sResponse.startsWith('227 ')) {
+    if (!sResponse.startsWith('227')) {
       throw FTPException('Could not start Passive Mode', sResponse);
     }
 

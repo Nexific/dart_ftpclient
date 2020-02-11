@@ -11,7 +11,7 @@ class FTPDirectory {
 
     String sResponse = _socket.readResponse();
 
-    return sResponse.startsWith('257 ');
+    return sResponse.startsWith('257');
   }
 
   bool deleteDirectory(String sName) {
@@ -19,7 +19,7 @@ class FTPDirectory {
 
     String sResponse = _socket.readResponse();
 
-    return sResponse.startsWith('250 ');
+    return sResponse.startsWith('250');
   }
 
   bool changeDirectory(String sName) {
@@ -27,14 +27,14 @@ class FTPDirectory {
 
     String sResponse = _socket.readResponse();
 
-    return sResponse.startsWith('250 ');
+    return sResponse.startsWith('250');
   }
 
   String currentDirectory() {
     _socket.sendCommand('PWD');
 
     String sResponse = _socket.readResponse();
-    if (!sResponse.startsWith('257 ')) {
+    if (!sResponse.startsWith('257')) {
       throw FTPException('Failed to get current working directory', sResponse);
     }
 

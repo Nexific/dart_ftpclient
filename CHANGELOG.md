@@ -1,6 +1,6 @@
 ## 0.4.0
 
--
+- Fixed Issue #1 (FTP Servers not sending a space after the status code)
 
 ## 0.3.0
 

@@ -63,7 +63,7 @@ class FTPSocket {
 
     // Wait for Connect
     String sResponse = readResponse();
-    if (!sResponse.startsWith('220 ')) {
+    if (!sResponse.startsWith('220')) {
       throw FTPException('Unknown response from FTP server', sResponse);
     }
 
@@ -71,7 +71,7 @@ class FTPSocket {
     sendCommand('USER $user');
 
     sResponse = readResponse();
-    if (!sResponse.startsWith('331 ')) {
+    if (!sResponse.startsWith('331')) {
       throw FTPException('Wrong username $user', sResponse);
     }
 
@@ -79,7 +79,7 @@ class FTPSocket {
     sendCommand('PASS $pass');
 
     sResponse = readResponse();
-    if (!sResponse.startsWith('230 ')) {
+    if (!sResponse.startsWith('230')) {
       throw FTPException('Wrong password', sResponse);
     }
 
