@@ -1,3 +1,8 @@
+import 'dart:io';
+
+import 'package:ftpclient/ftpclient.dart';
+import 'package:ftpclient/src/util/transferutil.dart';
+
 import '../ftpexceptions.dart';
 import '../ftpsocket.dart';
 
@@ -42,5 +47,64 @@ class FTPDirectory {
     int iEnde = sResponse.lastIndexOf('"');
 
     return sResponse.substring(iStart, iEnde);
+  }
+
+  String listDirectoryContent() {
+    // Transfer mode
+    TransferUtil.setTransferMode(_socket, TransferMode.ascii);
+
+    // Enter passive mode
+    _socket.sendCommand('PASV');
+
+    String sResponse = _socket.readResponse();
+    if (!sResponse.startsWith('227')) {
+      throw FTPException('Could not start Passive Mode', sResponse);
+    }
+
+    int iPort = TransferUtil.parsePort(sResponse);
+
+    // Directoy content listing
+    _socket.sendCommand('MLSD');
+
+    // Data transfer socket
+    RawSynchronousSocket dataSocket =
+        RawSynchronousSocket.connectSync(_socket.host, iPort);
+
+    sResponse = _socket.readResponse();
+    if (!sResponse.startsWith('150')) {
+      throw FTPException('Can\'t get content of directory.', sResponse);
+    }
+
+    int iToRead = 0;
+    List<int> lstDirectoryListing = List<int>();
+
+    do {
+      if (iToRead > 0) {
+        List<int> buffer = List<int>(iToRead);
+        dataSocket.readIntoSync(buffer);
+        buffer.forEach(lstDirectoryListing.add);
+      }
+
+      iToRead = dataSocket.available();
+
+      if (iToRead == 0 || lstDirectoryListing.isEmpty) {
+        sleep(Duration(milliseconds: 500));
+        iToRead = dataSocket.available();
+      }
+    } while (iToRead > 0 || lstDirectoryListing.isEmpty);
+
+    dataSocket.closeSync();
+
+    sResponse = _socket.readResponse();
+    if (!sResponse.startsWith('226')) {
+      throw FTPException('Can\'t get content of directory.', sResponse);
+    }
+
+    // Reset transfer mode
+    TransferUtil.setTransferMode(_socket, TransferMode.binary);
+
+    String sDirectoryListing = String.fromCharCodes(lstDirectoryListing);
+
+    return sDirectoryListing;
   }
 }

@@ -48,7 +48,7 @@ class FTPClient {
     _socket.connect(_user, _pass);
   }
 
-  // Disconnect from the FTP Server
+  /// Disconnect from the FTP Server
   void disconnect() {
     _socket.disconnect();
   }
@@ -93,6 +93,11 @@ class FTPClient {
   /// Returns the current directory
   String currentDirectory() {
     return FTPDirectory(_socket).currentDirectory();
+  }
+
+  /// Returns the content of the current directory
+  String listDirectoryContent() {
+    return FTPDirectory(_socket).listDirectoryContent();
   }
 
   /// Rename a file (or directory) from [sOldName] to [sNewName]
