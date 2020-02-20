@@ -101,9 +101,6 @@ class FTPDirectory {
       throw FTPException('Can\'t get content of directory.', sResponse);
     }
 
-    // Reset transfer mode
-    TransferUtil.setTransferMode(_socket, TransferMode.binary);
-
     // Convert MLSD response into FTPEntry
     List<FTPEntry> lstFTPEntries = List<FTPEntry>();
     String.fromCharCodes(lstDirectoryListing).split('\n').forEach((line) {
