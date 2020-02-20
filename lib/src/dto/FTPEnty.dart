@@ -75,16 +75,8 @@ class FTPEntry {
       }
     });
 
-    return FTPEntry._(
-        _name,
-        _modifyTime,
-        _persmission,
-        _type,
-        _size,
-        _unique,
-        _group,
-        _mode,
-        _owner);
+    return FTPEntry._(_name, _modifyTime, _persmission, _type, _size, _unique,
+        _group, _mode, _owner);
   }
 
   @override
