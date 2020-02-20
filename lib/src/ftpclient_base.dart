@@ -8,6 +8,7 @@ import 'package:ftpclient/src/debug/nooplog.dart';
 import 'package:ftpclient/src/debug/printlog.dart';
 
 import 'commands/directory.dart';
+import 'dto/FTPEnty.dart';
 import 'ftpsocket.dart';
 import 'transfermode.dart';
 
@@ -48,7 +49,7 @@ class FTPClient {
     _socket.connect(_user, _pass);
   }
 
-  // Disconnect from the FTP Server
+  /// Disconnect from the FTP Server
   void disconnect() {
     _socket.disconnect();
   }
@@ -93,6 +94,11 @@ class FTPClient {
   /// Returns the current directory
   String currentDirectory() {
     return FTPDirectory(_socket).currentDirectory();
+  }
+
+  /// Returns the content of the current directory
+  List<FTPEntry> listDirectoryContent() {
+    return FTPDirectory(_socket).listDirectoryContent();
   }
 
   /// Rename a file (or directory) from [sOldName] to [sNewName]
