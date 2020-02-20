@@ -8,7 +8,7 @@ Add the following dependency to the pubspec.yaml
 
 ```yaml
 dependencies:
-  ftpclient: ^0.5.0
+  ftpclient: ^0.6.0
 ```
 
 How to use the FTP Client:
