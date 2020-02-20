@@ -1,6 +1,6 @@
 ## 0.5.0
 
--
+- List files and directories in current directory
 
 ## 0.4.0
 
