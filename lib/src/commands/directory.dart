@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:ftpclient/ftpclient.dart';
+import 'package:ftpclient/src/dto/FTPEnty.dart';
 import 'package:ftpclient/src/util/transferutil.dart';
 
 import '../ftpexceptions.dart';
@@ -49,7 +50,7 @@ class FTPDirectory {
     return sResponse.substring(iStart, iEnde);
   }
 
-  String listDirectoryContent() {
+  List<FTPEntry> listDirectoryContent() {
     // Transfer mode
     TransferUtil.setTransferMode(_socket, TransferMode.ascii);
 
@@ -103,8 +104,14 @@ class FTPDirectory {
     // Reset transfer mode
     TransferUtil.setTransferMode(_socket, TransferMode.binary);
 
-    String sDirectoryListing = String.fromCharCodes(lstDirectoryListing);
+    // Convert MLSD response into FTPEntry
+    List<FTPEntry> lstFTPEntries = List<FTPEntry>();
+    String.fromCharCodes(lstDirectoryListing).split('\n').forEach((line) {
+      if (line.trim().isNotEmpty) {
+        lstFTPEntries.add(FTPEntry(line));
+      }
+    });
 
-    return sDirectoryListing;
+    return lstFTPEntries;
   }
 }

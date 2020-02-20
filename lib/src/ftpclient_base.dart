@@ -8,6 +8,7 @@ import 'package:ftpclient/src/debug/nooplog.dart';
 import 'package:ftpclient/src/debug/printlog.dart';
 
 import 'commands/directory.dart';
+import 'dto/FTPEnty.dart';
 import 'ftpsocket.dart';
 import 'transfermode.dart';
 
@@ -96,7 +97,7 @@ class FTPClient {
   }
 
   /// Returns the content of the current directory
-  String listDirectoryContent() {
+  List<FTPEntry> listDirectoryContent() {
     return FTPDirectory(_socket).listDirectoryContent();
   }
 
