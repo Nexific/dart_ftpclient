@@ -6,14 +6,14 @@ A small and simple FTP Client library for Dart Native.
 
 Add the following dependency to the pubspec.yaml
 
-### Stable
+**Stable**
 
 ```yaml
 dependencies:
   ftpclient: ^0.5.0
 ```
 
-### Development
+**Development**
 
 ```yaml
 dependencies:
@@ -22,7 +22,7 @@ dependencies:
 
 NOTE: This version is not yet available on pub.dev
 
-How to use the FTP Client:
+**How to use the FTP Client:**
 
 ```dart
 import 'dart:io';

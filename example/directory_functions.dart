@@ -1,31 +1,26 @@
-import 'dart:io';
-
 import 'package:ftpclient/ftpclient.dart';
 
 void main() {
   // Create Connection
-  FTPClient ftpClient = new FTPClient('example.com', user: 'myname', pass: 'mypass');
+  FTPClient ftpClient = FTPClient('example.com', user: 'myname', pass: 'mypass');
 
   // Connect to FTP Server
   ftpClient.connect();
 
   try {
-    // Create Directory
+    // Create directory
     ftpClient.makeDirectory('test');
 
-    // Change Directory
+    // Change directory
     ftpClient.changeDirectory('test');
 
-    // Get current Directory
-    print(ftpClient.currentDirectory());
+    // Get current directory
+    print(ftpClient.currentDirectory()); // => test
 
-    // Upload File
-    ftpClient.uploadFile(new File('test.zip'));
-    
-    // Navigate back
+    // Change directory up
     ftpClient.changeDirectory('..');
 
-    // Delete Directory
+    // Delete directory
     ftpClient.deleteDirectory('test');
   } finally {
     // Disconnect
