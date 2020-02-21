@@ -20,9 +20,7 @@ dependencies:
   ftpclient: ^0.6.0
 ```
 
-<aside class="warning">
-This version is not yet available on pub.dev
-</aside>
+NOTE: This version is not yet available on pub.dev
 
 How to use the FTP Client:
 
