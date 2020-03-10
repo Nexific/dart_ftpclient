@@ -20,6 +20,7 @@ class FileUpload {
   /// Upload File [fFile] to the current directory with [sRemoteName] (using filename if not set)
   void uploadFile(File fFile, [String sRemoteName = '']) {
     _log.log('Upload File: ${fFile.path}');
+    RandomAccessFile fRAFile = fFile.openSync(mode: FileMode.read);
 
     // Transfer Mode
     TransferUtil.setTransferMode(_socket, _mode);
@@ -47,7 +48,6 @@ class FileUpload {
         RawSynchronousSocket.connectSync(_socket.host, iPort);
 
     // Transfer file
-    RandomAccessFile fRAFile = fFile.openSync(mode: FileMode.read);
     int iRead = 0;
     final int iSize = fRAFile.lengthSync();
     _log.log('File Size: $iSize B');

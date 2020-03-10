@@ -1,6 +1,7 @@
 ## 0.6.0
 
 - Updated examples
+- #6 Fail faster on uploading a non-existing file
 
 ## 0.5.0
 
