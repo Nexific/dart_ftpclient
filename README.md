@@ -1,9 +1,9 @@
 A small and simple FTP Client library for Dart Native.
 
-![Pub Version](https://img.shields.io/pub/v/ftpclient)
-![GitHub](https://img.shields.io/github/license/Nexific/dart_ftpclient)
+[![Pub Version](https://img.shields.io/pub/v/ftpclient)](https://pub.dev/packages/ftpclient)
+[![GitHub license](https://img.shields.io/github/license/Nexific/dart_ftpclient)](https://github.com/Nexific/dart_ftpclient/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/Nexific/dart_ftpclient.svg?branch=master)](https://travis-ci.org/Nexific/dart_ftpclient)
-![GitHub issues](https://img.shields.io/github/issues/Nexific/dart_ftpclient)
+[![GitHub issues](https://img.shields.io/github/issues/Nexific/dart_ftpclient)](https://github.com/Nexific/dart_ftpclient/issues)
 
 ## Usage
 
