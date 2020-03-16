@@ -2,6 +2,7 @@
 
 - Updated examples
 - #6 Fail faster on uploading a non-existing file
+- #8 Made directory listing more compatible (new uid, gid and unknown properties in FTPEntry)
 
 ## 0.5.0
 
