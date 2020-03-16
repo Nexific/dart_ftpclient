@@ -8,12 +8,15 @@ class FTPEntry {
   final int size;
   final String unique;
   final String group;
+  final int gid;
   final String mode;
   final String owner;
+  final int uid;
+  final Map<String, String> additionalProperties;
 
   // Hide constructor
   FTPEntry._(this.name, this.modifyTime, this.persmission, this.type, this.size,
-      this.unique, this.group, this.mode, this.owner);
+      this.unique, this.group, this.gid, this.mode, this.owner, this.uid, this.additionalProperties);
 
   factory FTPEntry(final String sMlsdResponseLine) {
     if (sMlsdResponseLine == null || sMlsdResponseLine.trim().isEmpty) {
@@ -27,8 +30,11 @@ class FTPEntry {
     int _size = 0;
     String _unique;
     String _group;
+    int _gid = -1;
     String _mode;
     String _owner;
+    int _uid = -1;
+    Map<String, String> _additional = {};
 
     // Split and trim line
     sMlsdResponseLine.trim().split(';').forEach((property) {
@@ -63,20 +69,27 @@ class FTPEntry {
           case 'unix.group':
             _group = prop[1];
             break;
+          case 'unix.gid':
+            _gid = int.parse(prop[1]);
+            break;
           case 'unix.mode':
             _mode = prop[1];
             break;
           case 'unix.owner':
             _owner = prop[1];
             break;
+          case 'unix.uid':
+            _uid = int.parse(prop[1]);
+            break;
           default:
-            throw FTPException('Unknown FTPEntry property \'$property\'');
+            _additional.putIfAbsent(prop[0], () => prop[1]);
+            break;
         }
       }
     });
 
     return FTPEntry._(_name, _modifyTime, _persmission, _type, _size, _unique,
-        _group, _mode, _owner);
+        _group, _gid, _mode, _owner, _uid, Map.unmodifiable(_additional));
   }
 
   @override
