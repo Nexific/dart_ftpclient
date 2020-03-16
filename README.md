@@ -40,3 +40,9 @@ main() {
 ```
 
 For a complete example, see the examples in the [example folder](example/)!
+
+## Tested FTP Servers
+
+We have tested the lib with the following FTP Servers:
+
+* ProFTPd
