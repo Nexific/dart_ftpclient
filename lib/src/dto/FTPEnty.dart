@@ -15,8 +15,19 @@ class FTPEntry {
   final Map<String, String> additionalProperties;
 
   // Hide constructor
-  FTPEntry._(this.name, this.modifyTime, this.persmission, this.type, this.size,
-      this.unique, this.group, this.gid, this.mode, this.owner, this.uid, this.additionalProperties);
+  FTPEntry._(
+      this.name,
+      this.modifyTime,
+      this.persmission,
+      this.type,
+      this.size,
+      this.unique,
+      this.group,
+      this.gid,
+      this.mode,
+      this.owner,
+      this.uid,
+      this.additionalProperties);
 
   factory FTPEntry(final String sMlsdResponseLine) {
     if (sMlsdResponseLine == null || sMlsdResponseLine.trim().isEmpty) {

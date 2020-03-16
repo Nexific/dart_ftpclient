@@ -33,12 +33,11 @@ class FTPClient {
       String pass = '',
       bool debug = false,
       int timeout = 30,
-      int bufferSize = 1024 * 1024}) : 
-        _user = user,
+      int bufferSize = 1024 * 1024})
+      : _user = user,
         _pass = pass,
         _bufferSize = bufferSize,
         _log = debug ? PrintLog() : NoOpLogger() {
-
     _socket = FTPSocket(host, port, _log, timeout);
   }
 
