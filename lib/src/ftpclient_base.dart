@@ -13,10 +13,11 @@ import 'ftpsocket.dart';
 import 'transfermode.dart';
 
 class FTPClient {
-  String _user;
-  String _pass;
+  final String _user;
+  final String _pass;
   FTPSocket _socket;
-  DebugLog _log;
+  final int _bufferSize;
+  final DebugLog _log;
 
   /// Create a FTP Client instance
   ///
@@ -31,15 +32,12 @@ class FTPClient {
       String user = 'anonymous',
       String pass = '',
       bool debug = false,
-      int timeout = 30}) {
-    _user = user;
-    _pass = pass;
-
-    if (debug) {
-      _log = PrintLog();
-    } else {
-      _log = NoOpLogger();
-    }
+      int timeout = 30,
+      int bufferSize = 1024 * 1024}) : 
+        _user = user,
+        _pass = pass,
+        _bufferSize = bufferSize,
+        _log = debug ? PrintLog() : NoOpLogger() {
 
     _socket = FTPSocket(host, port, _log, timeout);
   }
@@ -57,7 +55,7 @@ class FTPClient {
   /// Upload the File [fFile] to the current directory
   void uploadFile(File fFile,
       {String sRemoteName = '', TransferMode mode = TransferMode.binary}) {
-    FileUpload(_socket, mode, _log).uploadFile(fFile, sRemoteName);
+    FileUpload(_socket, _bufferSize, mode, _log).uploadFile(fFile, sRemoteName);
   }
 
   /// Download the Remote File [sRemoteName] to the local File [fFile]

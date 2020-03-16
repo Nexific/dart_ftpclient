@@ -9,13 +9,13 @@ import '../debug/debuglog.dart';
 import '../util/transferutil.dart';
 
 class FileUpload {
-  static const int _BUFFER_SIZE = 1024 * 1024;
+  final int _bufferSize;
   final FTPSocket _socket;
   final TransferMode _mode;
   final DebugLog _log;
 
   /// File Upload Command
-  FileUpload(this._socket, this._mode, this._log);
+  FileUpload(this._socket, this._bufferSize, this._mode, this._log);
 
   /// Upload File [fFile] to the current directory with [sRemoteName] (using filename if not set)
   void uploadFile(File fFile, [String sRemoteName = '']) {
@@ -53,7 +53,7 @@ class FileUpload {
     _log.log('File Size: $iSize B');
 
     while (iRead < iSize) {
-      int iEnd = _BUFFER_SIZE;
+      int iEnd = _bufferSize;
       if (iRead + iEnd > iSize) {
         iEnd = iSize - iRead;
       }
