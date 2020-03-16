@@ -96,9 +96,11 @@ class FTPDirectory {
 
     dataSocket.closeSync();
 
-    sResponse = _socket.readResponse();
-    if (!sResponse.startsWith('226')) {
-      throw FTPException('Can\'t get content of directory.', sResponse);
+    if (!sResponse.contains('226')) {
+      sResponse = _socket.readResponse(true);
+      if (!sResponse.startsWith('226')) {
+        throw FTPException('Can\'t get content of directory.', sResponse);
+      }
     }
 
     // Convert MLSD response into FTPEntry
