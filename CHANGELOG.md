@@ -1,3 +1,7 @@
+## 0.8.0
+
+-
+
 ## 0.7.0
 
 - #7 / #10 Corrupted files on upload
