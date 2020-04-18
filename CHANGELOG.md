@@ -1,6 +1,6 @@
 ## 0.7.0
 
--
+- #7 / #10 Corrupted files on upload
 
 ## 0.6.0
 
