@@ -67,6 +67,7 @@ class FileUpload {
 
     _log.log('Uploaded: $iRead B');
 
+    fRAFile.flushSync();
     dataSocket.closeSync();
     fRAFile.closeSync();
 
