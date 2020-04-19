@@ -1,6 +1,6 @@
 ## 0.8.0
 
--
+- #7 / #10 Made the file upload API asynchronous
 
 ## 0.7.0
 
