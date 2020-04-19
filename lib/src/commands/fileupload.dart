@@ -9,18 +9,16 @@ import '../debug/debuglog.dart';
 import '../util/transferutil.dart';
 
 class FileUpload {
-  final int _bufferSize;
   final FTPSocket _socket;
   final TransferMode _mode;
   final DebugLog _log;
 
   /// File Upload Command
-  FileUpload(this._socket, this._bufferSize, this._mode, this._log);
+  FileUpload(this._socket, this._mode, this._log);
 
   /// Upload File [fFile] to the current directory with [sRemoteName] (using filename if not set)
-  void uploadFile(File fFile, [String sRemoteName = '']) {
+  Future<void> uploadFile(File fFile, [String sRemoteName = '']) async {
     _log.log('Upload File: ${fFile.path}');
-    RandomAccessFile fRAFile = fFile.openSync(mode: FileMode.read);
 
     // Transfer Mode
     TransferUtil.setTransferMode(_socket, _mode);
@@ -43,38 +41,20 @@ class FileUpload {
     _socket.sendCommand('STOR $sFilename');
 
     // Data Transfer Socket
+    final readStream = fFile.openRead();
     _log.log('Opening DataSocket to Port $iPort');
-    RawSynchronousSocket dataSocket =
-        RawSynchronousSocket.connectSync(_socket.host, iPort);
+    final dataSocket = await Socket.connect(_socket.host, iPort);
 
-    // Transfer file
-    int iRead = 0;
-    final int iSize = fRAFile.lengthSync();
-    _log.log('File Size: $iSize B');
+    final acceptResponse = _socket.readResponse();
+    _log.log('response $acceptResponse');
 
-    while (iRead < iSize) {
-      int iEnd = _bufferSize;
-      if (iRead + iEnd > iSize) {
-        iEnd = iSize - iRead;
-      }
-
-      List<int> buffer = List<int>(iEnd);
-      fRAFile.readIntoSync(buffer);
-      dataSocket.writeFromSync(buffer);
-
-      iRead += iEnd;
-    }
-
-    _log.log('Uploaded: $iRead B');
-
-    fRAFile.flushSync();
-    dataSocket.closeSync();
-    fRAFile.closeSync();
-
-    _socket.readResponse();
+    await dataSocket.addStream(readStream);
+    await dataSocket.flush();
+    await dataSocket.close();
 
     _log.log('File Uploaded!');
 
-    _socket.readResponse(true);
+    final fileReceivedResponse = _socket.readResponse();
+    _log.log('second response $fileReceivedResponse');
   }
 }

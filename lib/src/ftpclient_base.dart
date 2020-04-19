@@ -52,9 +52,10 @@ class FTPClient {
   }
 
   /// Upload the File [fFile] to the current directory
-  void uploadFile(File fFile,
-      {String sRemoteName = '', TransferMode mode = TransferMode.binary}) {
-    FileUpload(_socket, _bufferSize, mode, _log).uploadFile(fFile, sRemoteName);
+  Future<void> uploadFile(File fFile,
+      {String sRemoteName = '',
+      TransferMode mode = TransferMode.binary}) async {
+    await FileUpload(_socket, mode, _log).uploadFile(fFile, sRemoteName);
   }
 
   /// Download the Remote File [sRemoteName] to the local File [fFile]
